@@ -2,9 +2,10 @@ import "./App.css";
 import Login from "./Components/Login/Login";
 import Signup from "./Components/Signup/Signup";
 import { Route, Routes } from "react-router";
-import { Link } from "react-router-dom";
 import Home from "./Components/Home/Home";
 import { useState } from "react";
+import NavBar from "./Components/Navbar/Navbar";
+import CreateItems from "./Components/Create/CreateItems"
 
 const Employees = [
   {
@@ -26,9 +27,15 @@ const Employees = [
 function App() {
   const [employees, setEmployees] = useState(Employees);
 
-  const deleteItemHandler = (goalId) => {
-    setEmployees((prevGoals) => {
-      const updatedGoals = prevGoals.filter((goal) => goal.id !== goalId);
+  const addItemHandler = (employese) => {
+    setEmployees((prevItems) => {
+      return [...prevItems,employese];
+    });
+  };
+
+  const deleteItemHandler = (itemId) => {
+    setEmployees((prevItems) => {
+      const updatedGoals = prevItems.filter((item) => item.id !== itemId);
       return updatedGoals;
     });
   };
@@ -37,39 +44,15 @@ function App() {
     <div className="App">
       <header className="home-header">
         <nav className="home-header__nav">
-          <ul>
-            <li>
-              <Link className="nav-item" to="/">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link className="nav-item" to="/signup">
-                Signup
-              </Link>
-            </li>
-            <li>
-              <Link className="nav-item" to="/signin">
-                Signin
-              </Link>
-            </li>
-          </ul>
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={
-                <Home
-                  items={employees}
-                  onDeleteItemHandler={deleteItemHandler}
-                />
-              }
-            />
-            <Route exact path="/signup" element={<Signup />} />
-            <Route exact path="/signin" element={<Login />} />
-          </Routes>
+          <NavBar />
         </nav>
       </header>
+      <Routes>
+        <Route exact path="/" element={<Home onEmployees={employees} onDeleteItem={deleteItemHandler}/>} />
+        <Route exact path="/signup" element={<Signup />} />
+        <Route exact path="/signin" element={<Login />} />
+        <Route path="/create" element={<CreateItems onAddItems={addItemHandler} />} />
+      </Routes>
     </div>
   );
 }

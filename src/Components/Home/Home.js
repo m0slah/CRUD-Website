@@ -1,8 +1,13 @@
 import React from "react";
 import "./Home.css";
 import { Button, Table } from "react-bootstrap";
-
+import { Link } from "react-router-dom";
+import HomeItem from "./HomeItem";
 function Home(props) {
+  const deleteItem = () => {
+    props.onDelete(props.onEmployees);
+  };
+
   return (
     <div className="home">
       <div className="container-sm">
@@ -15,31 +20,44 @@ function Home(props) {
             </tr>
           </thead>
           <tbody>
-            {props.items && props.items.length > 0
-              ? props.items.map((item) => {
+            {props.onEmployees && props.onEmployees.length > 0
+              ? props.onEmployees.map((empleee) => {
                   return (
-                    <tr
-                      key={item.id}
-                      id={item.id}
-                      onDelete={props.onDeleteItemHandler}
+                    <HomeItem
+                      key={empleee.id}
+                      id={empleee.id}
+                      onDelete={props.onDeleteItem}
                     >
-                      <td>{item.name}</td>
-                      <td>{item.salary}</td>
+                        <td>{empleee.name}</td>
+                        <td>{empleee.salary}</td>
                       <td>
                         <Button
-                          className="mx-3"
+                          className="bg-danger border-danger"
+                          onClick={deleteItem}
                         >
                           Delete
                         </Button>
-                        &nbsp;
-                        <Button onClick={() => alert(item.id)}>Edit</Button>
                       </td>
-                    </tr>
+                    </HomeItem>
                   );
                 })
               : "There is no Data Available"}
           </tbody>
         </Table>
+        <Link className="d-grid gap-2" to="/create">
+          <button className="add-btn" size="lg">
+            Add New Employee
+          </button>
+        </Link>
+        {/* {props.onEmployees.map((employee) => (
+          <HomeItem
+            id={employee.id}
+            key={employee.id}
+            onDelete={props.onDeleteItem}
+          >
+            {employee.name}
+          </HomeItem> 
+        ))} */}
       </div>
     </div>
   );
