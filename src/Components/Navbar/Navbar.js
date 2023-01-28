@@ -5,7 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = (props) => {
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
@@ -26,7 +26,11 @@ const NavBar = () => {
               signin
             </Link>
           </Nav.Link>
-          
+          <Nav.Link href="#pricing">
+            <Link className="text-light text-decoration-none" onClick={props.onLogout}>
+              Logout
+            </Link>
+          </Nav.Link>
         </Nav>
       </Container>
     </Navbar>

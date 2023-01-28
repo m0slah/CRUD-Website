@@ -28,8 +28,8 @@ function Home(props) {
                       id={empleee.id}
                       onDelete={props.onDeleteItem}
                     >
-                        <td>{empleee.name}</td>
-                        <td>{empleee.salary}</td>
+                      <td>{empleee.name}</td>
+                      <td>{empleee.salary}</td>
                       <td>
                         <Button
                           className="bg-danger border-danger"

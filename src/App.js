@@ -5,7 +5,7 @@ import { Route, Routes } from "react-router";
 import Home from "./Components/Home/Home";
 import { useState } from "react";
 import NavBar from "./Components/Navbar/Navbar";
-import CreateItems from "./Components/Create/CreateItems"
+import CreateItems from "./Components/Create/CreateItems";
 
 const Employees = [
   {
@@ -24,12 +24,20 @@ const Employees = [
     salary: 1000,
   },
 ];
-function App() {
+const App = () => {
   const [employees, setEmployees] = useState(Employees);
+  const [isLoggined, setIsLoggined] = useState(false);
+
+  const loginHandler = (email, password) => {
+    setIsLoggined(true);
+  };
+  const logoutHandler = () => {
+    setIsLoggined(false);
+  };
 
   const addItemHandler = (employese) => {
     setEmployees((prevItems) => {
-      return [...prevItems,employese];
+      return [...prevItems, employese];
     });
   };
 
@@ -44,17 +52,39 @@ function App() {
     <div className="App">
       <header className="home-header">
         <nav className="home-header__nav">
-          <NavBar />
+          <NavBar onLogout={logoutHandler} />
         </nav>
       </header>
       <Routes>
-        <Route exact path="/" element={<Home onEmployees={employees} onDeleteItem={deleteItemHandler}/>} />
+        {isLoggined && (
+          <Route
+            exact
+            path="/"
+            element={
+              <Home
+                onEmployees={employees}
+                onLogout={logoutHandler}
+                onDeleteItem={deleteItemHandler}
+              />
+            }
+          />
+        )
+        }
         <Route exact path="/signup" element={<Signup />} />
-        <Route exact path="/signin" element={<Login />} />
-        <Route path="/create" element={<CreateItems onAddItems={addItemHandler} />} />
+        {!isLoggined && (
+          <Route
+            exact
+            path="/signin"
+            element={<Login onLogin={loginHandler} />}
+          />
+        )}
+        <Route
+          path="/create"
+          element={<CreateItems onAddItems={addItemHandler} />}
+        />
       </Routes>
     </div>
   );
-}
+};
 
 export default App;
