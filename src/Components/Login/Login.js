@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import "./Login.css";
 
 const Login = (props) => {
@@ -11,11 +11,21 @@ const Login = (props) => {
 
   const passwordHanler = (event) => {
     setEnteredPassword(event.target.value);
-  }
+  };
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(enteredEmail, enteredPassword);
+
+    const getUserData = localStorage.getItem("isSignuped");
+
+    if (getUserData && getUserData.length) {
+      const userData = JSON.parse(getUserData);
+      if (userData.enteredEmail === enteredEmail && userData.enteredPassword===enteredPassword) {
+        props.onLogin(enteredEmail,enteredPassword)
+      } else {
+        alert("Email or Password is Wrong")
+       }
+    }
   };
 
   return (
@@ -25,18 +35,20 @@ const Login = (props) => {
           <div className="div-input">
             <span htmlFor="email">Email</span>
             <input
-            type="email"
-            id="email"
-            value={enteredEmail}
-            onChange={emailHandler}
+              type="email"
+              id="email"
+              value={enteredEmail}
+              onChange={emailHandler}
             />
           </div>
           <div className="div-input">
             <span htmlFor="password">password</span>
-            <input type="password"
-            id="password"
-            value={enteredPassword}
-            onChange={passwordHanler}/>
+            <input
+              type="password"
+              id="password"
+              value={enteredPassword}
+              onChange={passwordHanler}
+            />
           </div>
           <div className="login-button">
             <button type="submit">Login</button>
@@ -48,6 +60,3 @@ const Login = (props) => {
 };
 
 export default Login;
-
-
-

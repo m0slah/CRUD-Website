@@ -21,9 +21,9 @@ const NavBar = (props) => {
               Signup
             </Link>
           </Nav.Link>
-          <Nav.Link href="#pricing">
+          <Nav.Link>
             <Link className="text-light text-decoration-none" to="/signin">
-              signin
+              Signin
             </Link>
           </Nav.Link>
           <Nav.Link href="#pricing">
