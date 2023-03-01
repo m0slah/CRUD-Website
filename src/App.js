@@ -7,7 +7,10 @@ import { useState, useEffect } from "react";
 import NavBar from "./Components/Navbar/Navbar";
 import CreateItems from "./Components/Create/CreateItems";
 
-const Employees = [];
+const Employees = [
+  { id: 1, name: "mo", salary: 1000 },
+  { id: 2, name: "ali", salary: 1000 },
+];
 const App = () => {
   const [employees, setEmployees] = useState(Employees);
   const [isLoggined, setIsLoggined] = useState(false);
@@ -18,10 +21,10 @@ const App = () => {
     if (storedUserLoggedinIformation === "1") {
       setIsLoggined(true);
     }
-  }, []);
+  }, [isLoggined]);
 
   const loginHandler = (email, password) => {
-    localStorage.setItem("isLoggedIn","1")
+    localStorage.setItem("isLoggedIn", "1");
     setIsLoggined(true);
   };
 
