@@ -8,7 +8,7 @@ import NavBar from "./Components/Navbar/Navbar";
 import CreateItems from "./Components/Create/CreateItems";
 
 const Employees = [
-  { id: 1, name: "mo", salary: 1000 },
+  { id: 1, name: "mo", salary: 1500 },
   { id: 2, name: "ali", salary: 1000 },
 ];
 const App = () => {
@@ -46,6 +46,25 @@ const App = () => {
     });
   };
 
+  function editHandler(employee) {
+    const updatedName = prompt("Enter the updated name:");
+    const updatedSalary = prompt("Enter the updated salary:");
+  
+    const updatedEmployee = {
+      ...employee,
+      name: updatedName,
+      salary: updatedSalary
+    };
+  
+    const index = employees.findIndex((emp) => emp.id === employee.id);
+  
+    const updatedEmployees = [...employees];
+    updatedEmployees[index] = updatedEmployee;
+  
+    setEmployees(updatedEmployees);
+  }
+  
+
   return (
     <div className="App">
       <header className="home-header">
@@ -63,6 +82,7 @@ const App = () => {
                 onEmployees={employees}
                 onLogout={logoutHandler}
                 onDeleteItem={deleteItemHandler}
+                onEdit={editHandler}
               />
             }
           />
