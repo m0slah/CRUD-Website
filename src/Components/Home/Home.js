@@ -16,7 +16,7 @@ function Home(props) {
         <tbody>
           {props.onEmployees.map((employee) => (
             <tr id={employee.id} key={employee.id}>
-              <td>{employee.name}</td>
+              <td className={classes["table_name"]}>{employee.name}</td>
               <td>${employee.salary}</td>
               <td>
                 <button
